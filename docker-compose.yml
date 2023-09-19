@@ -2,7 +2,6 @@ version: '3'
 services:
   web:
     build: .
-    image: meshosk/vaii-web-server
     volumes:
       - ./:/var/www/html/:cached
     ports:
