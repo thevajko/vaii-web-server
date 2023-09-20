@@ -7,5 +7,8 @@ RUN pecl install xdebug && docker-php-ext-enable xdebug \
     && echo "xdebug.client_port=9000" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && echo "xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
+RUN pecl install intl
+
 # install PDO module
 RUN docker-php-ext-install pdo_mysql
+RUN docker-php-ext-install php-intl
