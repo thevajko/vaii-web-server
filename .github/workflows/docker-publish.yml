@@ -20,7 +20,6 @@ env:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -28,17 +27,18 @@ jobs:
       # This is used to complete the identity challenge
       # with sigstore/fulcio when running outside of PRs.
       id-token: write
+
     strategy:
-        fail-fast: false
-        matrix:
-          platform:
-            - linux/386
-            - linux/amd64
-            - linux/arm64/v8
-            - linux/arm/v7
-          php-version:
-            - "8.2"
-            - "8.3"
+      fail-fast: false
+      matrix:
+        platform:
+          - linux/386
+          - linux/amd64
+          - linux/arm64/v8
+          - linux/arm/v7
+        php-version:
+          - "8.2"
+          - "8.3"
 
     steps:
       - name: Checkout repository
@@ -74,15 +74,76 @@ jobs:
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
       - name: Build and push Docker image
-        id: build-and-push
+        id: build
         uses: docker/build-push-action@v5 # v5.0.0
         with:
           context: .
           build-args: |
             PHP_VERSION: ${{ matrix.php-version }}
-          push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
           platforms: ${{ matrix.platform }}
+      - name: Export digest
+        run: |
+          mkdir -p /tmp/digests/${{ matrix.php-version }}/
+          digest="${{ steps.build.outputs.digest }}"
+          touch "/tmp/digests/${{ matrix.php-version }}/${digest#sha256:}"          
+      - name: Upload digest
+        uses: actions/upload-artifact@v3
+        with:
+          name: digests
+          path: /tmp/digests/${{ matrix.php-version }}/*
+          if-no-files-found: error
+          retention-days: 1
+
+  merge:
+    if: ${{ github.event_name != 'pull_request' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      # This is used to complete the identity challenge
+      # with sigstore/fulcio when running outside of PRs.
+      id-token: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version:
+          - "8.2"
+          - "8.3"
+    needs:
+      - build
+    steps:
+      - name: Download digests
+        uses: actions/download-artifact@v3
+        with:
+          name: digests
+          path: /tmp/digests/${{ matrix.php-version }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            - type=raw,value=${{ matrix.php-version }}
+            - type=raw,value=latest,enable=${{ matrix.php-version == '8.3' }}
+
+      - name: Log into registry ${{ env.REGISTRY }}
+        uses: docker/login-action@v3 # v3.0.0
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create manifest list and push
+        working-directory: /tmp/digests/${{ matrix.php-version }}
+        run: |
+          docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
+            $(printf '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@sha256:%s ' *)          
+      - name: Inspect image
+        run: |
+          docker buildx imagetools inspect ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.version }}
