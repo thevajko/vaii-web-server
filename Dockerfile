@@ -1,4 +1,6 @@
-FROM php:8.2-apache
+ARG PHP_VERSION=8.3
+
+FROM php:${PHP_VERSION}-apache
 
 RUN apt-get update
 
