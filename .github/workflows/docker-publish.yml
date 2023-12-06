@@ -80,7 +80,6 @@ jobs:
           context: .
           build-args: |
             PHP_VERSION: ${{ matrix.php-version }}
-          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
