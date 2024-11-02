@@ -1,6 +1,6 @@
 # VAII web server
 
-Ropozitár slúži na definíciu docker image obsahujúceho PHP pre potreby výučby VAII na Fri UNIZA.
+Ropozitár slúži na definíciu docker image obsahujúceho PHP pre potreby výučby VAII na FRI UNIZA.
 
 Rozdiely oproti základnému [php](https://hub.docker.com/_/php) image
 
