@@ -94,7 +94,7 @@ jobs:
       - name: Upload digest
         uses: actions/upload-artifact@v4
         with:
-          name: digest-${{ matrix.platform.replace('/', '-') }}-${{ matrix.php-version }}
+          name: upload-artifact-${{ github.run_id }}-${{ github.job }}-${{ strategy.job-index || 0 }}
           path: /tmp/digests/*
           if-no-files-found: error
           retention-days: 1
