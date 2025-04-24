@@ -111,9 +111,9 @@ jobs:
 
     strategy:
       fail-fast: false
-    matrix:
-      platform: [linux-386, linux-amd64, linux-arm64-v8] # použitie - namiesto /
-      php-version: ['8.2', '8.3']
+      matrix:
+        platform: [linux-386, linux-amd64, linux-arm64-v8] # použitie - namiesto /
+        php-version: ['8.2', '8.3']
     needs:
       - build
     steps:
