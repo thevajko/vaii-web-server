@@ -1,10 +1,10 @@
 # VAII web server
 
-Ropozitár slúži na definíciu docker image obsahujúceho PHP pre potreby výučby VAII na FRI UNIZA.
+Repozitár slúži na definíciu docker image obsahujúceho PHP pre potreby výučby VAII na FRI UNIZA.
 
 Rozdiely oproti základnému [php](https://hub.docker.com/_/php) image
 
-* Nainštalovany a nakonfigurovaný `xdebug` na porte _9003_
+* Nainštalovaný a nakonfigurovaný `xdebug` na porte _9003_
 * Nainštalované moduly: `pdo_mysql`, `intl`
 
 ## Dostupné verzie:
@@ -14,7 +14,7 @@ Rozdiely oproti základnému [php](https://hub.docker.com/_/php) image
 
 Adresa docker registra `ghcr.io/thevajko/vaii-web-server:latest`, ostatné verzie sú dostupné na [Github package](https://github.com/thevajko/vaii-web-server/pkgs/container/vaii-web-server) stránke.
 
-Docker image sa builduje pre nasledovné architektúry:
+Docker image sa zostavuje pre nasledovné architektúry:
 * linux/386
 * linux/amd64
 * linux/arm64/v8
