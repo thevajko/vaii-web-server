@@ -111,10 +111,9 @@ jobs:
 
     strategy:
       fail-fast: false
-      matrix:
-        php-version:
-          - "8.2"
-          - "8.3"
+    matrix:
+      platform: [linux-386, linux-amd64, linux-arm64-v8] # použitie - namiesto /
+      php-version: ['8.2', '8.3']
     needs:
       - build
     steps:
@@ -136,7 +135,7 @@ jobs:
             - type=raw,value=main,enable=${{ matrix.php-version == '8.3' }}
 
       - name: Log into registry ${{ env.REGISTRY }}
-        uses: docker/login-action@v4 # v3.0.0
+        uses: docker/login-action@v3 # v3.0.0
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
