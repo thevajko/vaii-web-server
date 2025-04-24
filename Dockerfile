@@ -16,9 +16,11 @@ RUN pecl install xdebug && docker-php-ext-enable xdebug \
     && echo "xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 
-RUN apt-get install -y libicu-dev
+RUN apt-get install -y libicu-dev libpng-dev
 
 RUN docker-php-ext-configure intl \
     && docker-php-ext-install intl
 
 RUN docker-php-ext-install pdo_mysql
+
+RUN docker-php-ext-install gd
