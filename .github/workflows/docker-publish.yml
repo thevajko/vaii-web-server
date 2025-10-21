@@ -37,8 +37,8 @@ jobs:
           - linux/arm64/v8
           - linux/arm/v7
         php-version:
-          - "8.2"
           - "8.3"
+          - "8.4"
 
     steps:
       - name: Checkout repository
@@ -113,7 +113,7 @@ jobs:
       fail-fast: false
       matrix:
         platform: [linux-386, linux-amd64, linux-arm64-v8] # použitie - namiesto /
-        php-version: ['8.2', '8.3']
+        php-version: ['8.3', '8.4']
     needs:
       - build
     steps:
@@ -131,8 +131,8 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             - type=raw,value=${{ matrix.php-version }}
-            - type=raw,value=latest,enable=${{ matrix.php-version == '8.3' }}
-            - type=raw,value=main,enable=${{ matrix.php-version == '8.3' }}
+            - type=raw,value=latest,enable=${{ matrix.php-version == '8.4' }}
+            - type=raw,value=main,enable=${{ matrix.php-version == '8.4' }}
 
       - name: Log into registry ${{ env.REGISTRY }}
         uses: docker/login-action@v3 # v3.0.0
