@@ -24,3 +24,22 @@ Docker images are built for the following architectures:
 
 * linux/amd64
 * linux/arm64/v8
+
+## Changing the Xdebug port
+
+Xdebug connects to your IDE at `host.docker.internal` on port `9003` by default. If that port is unavailable or your IDE uses a different port, override it with the `XDEBUG_CONFIG` environment variable in your `docker-compose.yml`:
+
+```yaml
+services:
+  web:
+    environment:
+      XDEBUG_CONFIG: "client_host=host.docker.internal client_port=9005"
+```
+
+Replace `9005` with your preferred port and configure your IDE to listen on the same port. Keep the other settings of your `web` service when adding this environment variable.
+
+Recreate the container to apply the change:
+
+```sh
+docker compose up -d --force-recreate web
+```
