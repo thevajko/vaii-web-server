@@ -19,7 +19,5 @@ Rozdiely oproti základnému [php](https://hub.docker.com/_/php) image
 Adresa docker registra `ghcr.io/thevajko/vaii-web-server:latest`, ostatné verzie sú dostupné na [Github package](https://github.com/thevajko/vaii-web-server/pkgs/container/vaii-web-server) stránke.
 
 Docker image sa zostavuje pre nasledovné architektúry:
-* linux/386
 * linux/amd64
 * linux/arm64/v8
-* linux/arm/v7
