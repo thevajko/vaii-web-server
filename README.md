@@ -1,23 +1,26 @@
 # VAII web server
 
-Repozitár slúži na definíciu docker image obsahujúceho PHP pre potreby výučby VAII na FRI UNIZA.
+This repository defines a Docker image with PHP for teaching the VAII course at FRI UNIZA.
 
-Rozdiely oproti základnému [php](https://hub.docker.com/_/php) image
+Differences from the base [php](https://hub.docker.com/_/php) image:
 
-* Nainštalovaný a nakonfigurovaný `xdebug` na porte _9003_
-* Nainštalované moduly: `pdo_mysql`, `intl`
+* `xdebug` installed and configured on port _9003_
+* Installed extensions: `pdo_mysql`, `intl`
 
-## Dostupné verzie:
-* `latest` respektíve `main` odkazuje na verziu `8.5`
-* `8.4` založený na `php:8.4-apache`
-* `8.5` založený na `php:8.5-apache`
+## Available versions
 
-### Historické verzie - aktuálne už neudržiavané:
-* `8.3` založený na `php:8.3-apache`
-* `8.2` založený na `php:8.2-apache`
+* `latest` and `main` point to version `8.5`
+* `8.4` is based on `php:8.4-apache`
+* `8.5` is based on `php:8.5-apache`
 
-Adresa docker registra `ghcr.io/thevajko/vaii-web-server:latest`, ostatné verzie sú dostupné na [Github package](https://github.com/thevajko/vaii-web-server/pkgs/container/vaii-web-server) stránke.
+### Historical versions (no longer maintained)
 
-Docker image sa zostavuje pre nasledovné architektúry:
+* `8.3` is based on `php:8.3-apache`
+* `8.2` is based on `php:8.2-apache`
+
+The image is available at `ghcr.io/thevajko/vaii-web-server:latest`. Other versions are available on the [GitHub package](https://github.com/thevajko/vaii-web-server/pkgs/container/vaii-web-server) page.
+
+Docker images are built for the following architectures:
+
 * linux/amd64
 * linux/arm64/v8
