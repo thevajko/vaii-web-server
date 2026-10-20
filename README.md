@@ -8,11 +8,12 @@ Rozdiely oproti základnému [php](https://hub.docker.com/_/php) image
 * Nainštalované moduly: `pdo_mysql`, `intl`
 
 ## Dostupné verzie:
-* `latest` respektíve `main` odkazuje na verziu `8.4`
-* `8.3` založený na `php:8.3-apache`
+* `latest` respektíve `main` odkazuje na verziu `8.5`
 * `8.4` založený na `php:8.4-apache`
+* `8.5` založený na `php:8.5-apache`
 
 ### Historické verzie - aktuálne už neudržiavané:
+* `8.3` založený na `php:8.3-apache`
 * `8.2` založený na `php:8.2-apache`
 
 Adresa docker registra `ghcr.io/thevajko/vaii-web-server:latest`, ostatné verzie sú dostupné na [Github package](https://github.com/thevajko/vaii-web-server/pkgs/container/vaii-web-server) stránke.
